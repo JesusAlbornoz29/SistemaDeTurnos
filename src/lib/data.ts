@@ -12,48 +12,51 @@ export type Service = {
 export const services: Service[] = [
   {
     id: 'general',
-    name: 'General Check-up',
-    description: 'Routine health examinations and consultations.',
+    name: 'Consulta General',
+    description: 'Exámenes de salud de rutina y consultas.',
     icon: Stethoscope,
     prefix: 'G',
   },
   {
     id: 'cardiology',
-    name: 'Cardiology',
-    description: 'Specialized care for heart and blood vessel conditions.',
+    name: 'Cardiología',
+    description: 'Atención especializada para afecciones del corazón.',
     icon: HeartPulse,
     prefix: 'C',
   },
   {
     id: 'pediatrics',
-    name: 'Pediatrics',
-    description: 'Medical care for infants, children, and adolescents.',
+    name: 'Pediatría',
+    description: 'Atención médica para bebés, niños y adolescentes.',
     icon: Baby,
     prefix: 'P',
   },
   {
     id: 'traumatology',
-    name: 'Traumatology',
-    description: 'Dealing with injuries and wounds caused by accidents.',
+    name: 'Traumatología',
+    description: 'Tratamiento de lesiones y heridas por accidentes.',
     icon: Bone,
     prefix: 'T',
   },
 ];
 
+export type PatientStatus = 'En espera' | 'Llamando' | 'Atendido';
+
 export type Patient = {
   patientId: string;
   arrivalTime: string;
   serviceType: string;
+  status: PatientStatus;
   estimatedWaitTime?: number;
 };
 
 export const initialQueue: Patient[] = [
-  { patientId: 'G-001', arrivalTime: new Date(Date.now() - 30 * 60000).toISOString(), serviceType: 'General Check-up' },
-  { patientId: 'C-001', arrivalTime: new Date(Date.now() - 25 * 60000).toISOString(), serviceType: 'Cardiology' },
-  { patientId: 'P-001', arrivalTime: new Date(Date.now() - 20 * 60000).toISOString(), serviceType: 'Pediatrics' },
-  { patientId: 'G-002', arrivalTime: new Date(Date.now() - 15 * 60000).toISOString(), serviceType: 'General Check-up' },
-  { patientId: 'T-001', arrivalTime: new Date(Date.now() - 10 * 60000).toISOString(), serviceType: 'Traumatology' },
-  { patientId: 'C-002', arrivalTime: new Date(Date.now() - 5 * 60000).toISOString(), serviceType: 'Cardiology' },
+  { patientId: 'G-001', arrivalTime: new Date(Date.now() - 30 * 60000).toISOString(), serviceType: 'Consulta General', status: 'En espera' },
+  { patientId: 'C-001', arrivalTime: new Date(Date.now() - 25 * 60000).toISOString(), serviceType: 'Cardiología', status: 'En espera' },
+  { patientId: 'P-001', arrivalTime: new Date(Date.now() - 20 * 60000).toISOString(), serviceType: 'Pediatría', status: 'En espera' },
+  { patientId: 'G-002', arrivalTime: new Date(Date.now() - 15 * 60000).toISOString(), serviceType: 'Consulta General', status: 'En espera' },
+  { patientId: 'T-001', arrivalTime: new Date(Date.now() - 10 * 60000).toISOString(), serviceType: 'Traumatología', status: 'En espera' },
+  { patientId: 'C-002', arrivalTime: new Date(Date.now() - 5 * 60000).toISOString(), serviceType: 'Cardiología', status: 'En espera' },
 ];
 
 export type HistoricalWait = {
@@ -63,10 +66,10 @@ export type HistoricalWait = {
 }
 
 export const historicalWaitTimes: HistoricalWait[] = [
-    { patientId: 'G-980', serviceType: 'General Check-up', waitTime: 25 },
-    { patientId: 'C-981', serviceType: 'Cardiology', waitTime: 45 },
-    { patientId: 'P-982', serviceType: 'Pediatrics', waitTime: 15 },
-    { patientId: 'T-983', serviceType: 'Traumatology', waitTime: 60 },
-    { patientId: 'G-984', serviceType: 'General Check-up', waitTime: 30 },
-    { patientId: 'C-985', serviceType: 'Cardiology', waitTime: 50 },
+    { patientId: 'G-980', serviceType: 'Consulta General', waitTime: 25 },
+    { patientId: 'C-981', serviceType: 'Cardiología', waitTime: 45 },
+    { patientId: 'P-982', serviceType: 'Pediatría', waitTime: 15 },
+    { patientId: 'T-983', serviceType: 'Traumatología', waitTime: 60 },
+    { patientId: 'G-984', serviceType: 'Consulta General', waitTime: 30 },
+    { patientId: 'C-985', serviceType: 'Cardiología', waitTime: 50 },
 ];

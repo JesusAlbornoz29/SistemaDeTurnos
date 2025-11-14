@@ -20,7 +20,7 @@ function AdminHeader() {
     <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-30 flex h-16 items-center gap-4 px-4 sm:px-6">
       <SidebarTrigger className="md:hidden" />
       <div className="flex-1">
-        <h1 className="font-semibold text-lg">Admin Dashboard</h1>
+        <h1 className="font-semibold text-lg">Panel de Administración</h1>
       </div>
     </header>
   );
@@ -49,10 +49,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Patient View">
+              <SidebarMenuButton asChild tooltip="Vista del Paciente">
                 <Link href="/">
                   <Home />
-                  <span className="group-data-[collapsible=icon]:hidden">Patient View</span>
+                  <span className="group-data-[collapsible=icon]:hidden">Vista del Paciente</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

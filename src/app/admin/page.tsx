@@ -1,9 +1,9 @@
-import { QueueTable } from '@/components/admin/QueueTable';
+import { QueueManager } from '@/components/admin/QueueManager';
 
 export default function AdminPage() {
   return (
     <div className="animate-in fade-in-50">
-      <QueueTable />
+      <QueueManager />
     </div>
   );
 }

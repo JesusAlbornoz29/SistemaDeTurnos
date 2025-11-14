@@ -18,8 +18,8 @@ export function AppointmentCard() {
   const handleGetNumber = () => {
     if (!selectedService) {
       toast({
-        title: 'Selection Required',
-        description: 'Please select a service to get an appointment number.',
+        title: 'Selección Requerida',
+        description: 'Por favor, selecciona un servicio para obtener un número de cita.',
         variant: 'destructive',
       });
       return;
@@ -32,7 +32,7 @@ export function AppointmentCard() {
       } else {
         toast({
           title: 'Error',
-          description: result.error || 'Could not generate an appointment number.',
+          description: result.error || 'No se pudo generar un número de cita.',
           variant: 'destructive',
         });
       }
@@ -48,17 +48,17 @@ export function AppointmentCard() {
     return (
       <Card className="w-full max-w-md text-center shadow-2xl animate-in fade-in-50 zoom-in-95">
         <CardHeader>
-          <CardTitle className="text-2xl">Your Appointment Number</CardTitle>
+          <CardTitle className="text-2xl">Tu Número de Cita</CardTitle>
           <CardDescription>{appointment.serviceName}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="bg-primary/10 border-2 border-dashed border-primary/50 rounded-lg p-8">
             <p className="text-5xl font-bold text-primary tracking-widest">{appointment.number}</p>
           </div>
-          <p className="mt-4 text-muted-foreground">Please wait to be called. You can now close this window.</p>
+          <p className="mt-4 text-muted-foreground">Por favor, espera a ser llamado. Ya puedes cerrar esta ventana.</p>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Button onClick={resetFlow}>Get Another Number</Button>
+          <Button onClick={resetFlow}>Obtener Otro Número</Button>
         </CardFooter>
       </Card>
     );
@@ -67,12 +67,12 @@ export function AppointmentCard() {
   return (
     <Card className="w-full max-w-2xl shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl">Request an Appointment</CardTitle>
-        <CardDescription>Select a service and get your appointment number instantly.</CardDescription>
+        <CardTitle className="text-2xl">Solicitar una Cita</CardTitle>
+        <CardDescription>Selecciona un servicio y obtén tu número de cita al instante.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium mb-4">1. Select a Service</h3>
+          <h3 className="text-lg font-medium mb-4">1. Selecciona un Servicio</h3>
           <ServiceSelector selectedService={selectedService} onSelectService={setSelectedService} />
         </div>
       </CardContent>
@@ -83,10 +83,10 @@ export function AppointmentCard() {
           ) : (
             <Ticket className="mr-2" />
           )}
-          Get My Number
+          Obtener Mi Número
         </Button>
         <p className="text-xs text-center text-muted-foreground">
-            A unique, sequential number will be generated for you. This number resets daily.
+            Se generará un número secuencial único para ti. Este número se reinicia diariamente.
         </p>
       </CardFooter>
     </Card>

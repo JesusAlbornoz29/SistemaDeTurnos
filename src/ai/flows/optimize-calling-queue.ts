@@ -1,11 +1,11 @@
 'use server';
 
 /**
- * @fileOverview An AI agent that optimizes the calling queue in a hospital.
+ * @fileOverview Un agente de IA que optimiza la cola de llamadas en un hospital.
  *
- * - optimizeCallingQueue - A function that handles the queue optimization process.
- * - OptimizeCallingQueueInput - The input type for the optimizeCallingQueue function.
- * - OptimizedCallingOrderOutput - The return type for the optimizeCallingQueue function.
+ * - optimizeCallingQueue - Una función que maneja el proceso de optimización de la cola.
+ * - OptimizeCallingQueueInput - El tipo de entrada para la función optimizeCallingQueue.
+ * - OptimizedCallingOrderOutput - El tipo de retorno para la función optimizeCallingQueue.
  */
 
 import {ai} from '@/ai/genkit';
@@ -17,24 +17,25 @@ const OptimizeCallingQueueInputSchema = z.object({
       patientId: z.string(),
       arrivalTime: z.string().datetime(),
       serviceType: z.string(),
+      status: z.string(),
       estimatedWaitTime: z.number().optional(),
     }))
-    .describe('The current calling queue with patient details.'),
+    .describe('La cola de llamadas actual con detalles del paciente.'),
   historicalWaitTimes: z
     .array(z.object({
       patientId: z.string(),
       serviceType: z.string(),
       waitTime: z.number(),
     }))
-    .describe('Historical wait times for different service types.'),
+    .describe('Tiempos de espera históricos para diferentes tipos de servicio.'),
 });
 export type OptimizeCallingQueueInput = z.infer<typeof OptimizeCallingQueueInputSchema>;
 
 const OptimizedCallingOrderOutputSchema = z.object({
   optimizedQueue: z
     .array(z.string())
-    .describe('The optimized calling queue with patient IDs in the new order.'),
-  analysis: z.string().describe('Explanation of why the queue was reordered.'),
+    .describe('La cola de llamadas optimizada con los IDs de los pacientes en el nuevo orden.'),
+  analysis: z.string().describe('Explicación de por qué se reordenó la cola.'),
 });
 export type OptimizedCallingOrderOutput = z.infer<typeof OptimizedCallingOrderOutputSchema>;
 
@@ -46,27 +47,28 @@ const analyzeQueuePrompt = ai.definePrompt({
   name: 'analyzeQueuePrompt',
   input: {schema: OptimizeCallingQueueInputSchema},
   output: {schema: OptimizedCallingOrderOutputSchema},
-  prompt: `You are an AI assistant helping to optimize the patient calling queue in a hospital to minimize overall wait times while maintaining fairness.  Analyze the current queue and historical wait times to determine the optimal calling order.
+  prompt: `Eres un asistente de IA que ayuda a optimizar la cola de llamadas de pacientes en un hospital para minimizar los tiempos de espera generales manteniendo la equidad. Analiza la cola actual y los tiempos de espera históricos para determinar el orden de llamada óptimo.
 
-Current Queue:
+Cola Actual:
 {{#each queue}}
-- Patient ID: {{patientId}}, Arrival Time: {{arrivalTime}}, Service Type: {{serviceType}}{{#if estimatedWaitTime}}, Estimated Wait Time: {{estimatedWaitTime}} minutes{{/if}}
+- ID Paciente: {{patientId}}, Hora de Llegada: {{arrivalTime}}, Tipo de Servicio: {{serviceType}}, Estado: {{status}}{{#if estimatedWaitTime}}, Tiempo de Espera Estimado: {{estimatedWaitTime}} minutos{{/if}}
 {{/each}}
 
-Historical Wait Times:
+Tiempos de Espera Históricos:
 {{#each historicalWaitTimes}}
-- Patient ID: {{patientId}}, Service Type: {{serviceType}}, Wait Time: {{waitTime}} minutes
+- ID Paciente: {{patientId}}, Tipo de Servicio: {{serviceType}}, Tiempo de Espera: {{waitTime}} minutos
 {{/each}}
 
-Consider these factors when reordering the queue:
-*   Prioritize patients who have been waiting longer.
-*   Consider the estimated wait times for each service type.
-*   Ensure fairness by not excessively delaying any patient.
-*   Optimize for overall minimum wait time across all patients.
+Considera estos factores al reordenar la cola:
+*   Prioriza a los pacientes que han estado esperando más tiempo.
+*   Considera los tiempos de espera estimados para cada tipo de servicio.
+*   Asegura la equidad no retrasando excesivamente a ningún paciente.
+*   Optimiza para el tiempo de espera mínimo general en todos los pacientes.
+*   Solo reordena a los pacientes que están 'En espera'. No incluyas pacientes 'Llamando' o 'Atendido' en la cola optimizada.
 
-Return the optimized queue with patient IDs in the new order, and provide a brief explanation of why the queue was reordered.
+Devuelve la cola optimizada con los IDs de los pacientes en el nuevo orden, y proporciona una breve explicación de por qué se reordenó la cola.
 
-Output the optimized queue and analysis in JSON format.`,
+Genera la cola optimizada y el análisis en formato JSON.`,
 });
 
 const optimizeCallingQueueFlow = ai.defineFlow(

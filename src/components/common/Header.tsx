@@ -15,7 +15,7 @@ export function Header() {
             href="/"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
           >
-            Patient
+            Paciente
           </Link>
           <Link
             href="/admin"
