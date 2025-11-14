@@ -57,7 +57,7 @@ Base de datos: MongoDB / PostgreSQL (detallar la que usaste)
 
 IA: Modelos ligeros para predicción estadística
 
-Para correrlo: 
-1- Descargar
-2- npm install
+Para correrlo: <br>
+1- Descargar  <br>
+2- npm install <br>
 3- npm run dev
