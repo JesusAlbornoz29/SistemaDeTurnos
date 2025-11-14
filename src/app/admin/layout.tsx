@@ -12,7 +12,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
   useSidebar,
-  SidebarInset,
 } from '@/components/ui/sidebar';
 
 function AdminHeader() {
@@ -27,25 +26,37 @@ function AdminHeader() {
   );
 }
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen w-full">
+      <div className="flex min-h-screen w-full">
         <Sidebar className="hidden md:block border-r" collapsible="icon">
           <SidebarHeader className="flex items-center gap-2 px-4 lg:px-6 h-16">
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <Hospital className="h-6 w-6 text-primary" />
             </Link>
-            <span className="group-data-[collapsible=icon]:hidden font-bold">CitaPresto</span>
+            <span className="group-data-[collapsible=icon]:hidden font-bold">
+              CitaPresto
+            </span>
           </SidebarHeader>
           <SidebarMenu className="flex-1 px-2 lg:px-4">
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Dashboard" isActive={pathname.startsWith('/admin')}>
+              <SidebarMenuButton
+                asChild
+                tooltip="Dashboard"
+                isActive={pathname.startsWith('/admin')}
+              >
                 <Link href="/admin">
                   <LayoutDashboard />
-                  <span className="group-data-[collapsible=icon]:hidden">Dashboard</span>
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Dashboard
+                  </span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -53,20 +64,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <SidebarMenuButton asChild tooltip="Vista del Paciente">
                 <Link href="/">
                   <Home />
-                  <span className="group-data-[collapsible=icon]:hidden">Vista del Paciente</span>
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Vista del Paciente
+                  </span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </Sidebar>
-        <SidebarInset>
-          <div className="flex flex-col">
-            <AdminHeader />
-            <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted/40">
-              {children}
-            </main>
-          </div>
-        </SidebarInset>
+        <div className="flex flex-col flex-1">
+          <AdminHeader />
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted/40">
+            {children}
+          </main>
+        </div>
       </div>
     </SidebarProvider>
   );
