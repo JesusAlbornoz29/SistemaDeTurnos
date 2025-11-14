@@ -12,6 +12,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
   useSidebar,
+  SidebarInset,
 } from '@/components/ui/sidebar';
 
 function AdminHeader() {
@@ -31,7 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <SidebarProvider>
-      <div className="grid min-h-screen w-full md:grid-cols-[var(--sidebar-width-icon)] lg:grid-cols-[280px]">
+      <div className="min-h-screen w-full">
         <Sidebar className="hidden md:block border-r" collapsible="icon">
           <SidebarHeader className="flex items-center gap-2 px-4 lg:px-6 h-16">
             <Link href="/" className="flex items-center gap-2 font-semibold">
@@ -58,12 +59,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </SidebarMenuItem>
           </SidebarMenu>
         </Sidebar>
-        <div className="flex flex-col">
-          <AdminHeader />
-          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted/40">
-            {children}
-          </main>
-        </div>
+        <SidebarInset>
+          <div className="flex flex-col">
+            <AdminHeader />
+            <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-muted/40">
+              {children}
+            </main>
+          </div>
+        </SidebarInset>
       </div>
     </SidebarProvider>
   );
